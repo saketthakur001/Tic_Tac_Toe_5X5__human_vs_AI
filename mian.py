@@ -12,10 +12,10 @@ three_from_the_five = {1:[2, 7, 12, 17, 22],
                4:[9]
                }
 
-five_spaces = {1:[0, 5, 10, 15, 20],
-               5:[0, 1, 2, 3, 4],
-               6:[0],
-               4:[4]
+five_spaces = {1:[1, 6, 11, 16, 21],
+               5:[1, 2, 3, 4, 5],
+               6:[1],
+               4:[5]
               }
 
 # return 4 numbers that starts from the "number" and has "difference" difference
@@ -119,7 +119,6 @@ def who_won(board):
             print('O wins the game!')
             return "O"
 
-
 # trying to find the best move to defend
 
 def defend(board, opponent, danger_level):
@@ -141,11 +140,17 @@ def defend(board, opponent, danger_level):
     for i in best_places_ordered:
         if i in best_moves: best_moves2.append(i)
     print(best_moves2, 'best move?')
-    return best_moves2
+    return best_moves2  
 
 def opponent_raw(opponent):
-    players_moves = player_moves(empty_board, opponent)
-    
+    player_moves_ = player_moves(empty_board, opponent)
+    for diff_num in five_spaces:
+        for num in five_spaces[diff_num]:
+            print(num)
+
+            lis = diff(num, diff_num, 5)
+            print(lis)
+
     # lis = []
     # lis2 = [] # i know this is a dumb thing to do, but I am tired and just gonna do it
     # win_moves = possible_wins(1)
