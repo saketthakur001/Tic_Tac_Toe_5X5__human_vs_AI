@@ -18,6 +18,22 @@ five_spaces = {1:[1, 6, 11, 16, 21],
                4:[5]
               }
 
+# empty_board = [str(i+1) for i in range(25)]
+empty_board = [" " for i in range(25)]
+
+# This function prints the board
+def print_board(lis):
+    print(f' {lis[0]} | {lis[1]} | {lis[2]} | {lis[3]} | {lis[4]}')
+    print(f'-------------------')
+    print(f' {lis[5]} | {lis[6]} | {lis[7]} | {lis[8]} | {lis[9]}')
+    print(f'-------------------')
+    print(f' {lis[10]} | {lis[11]} | {lis[12]} | {lis[13]} | {lis[14]}')
+    print(f'-------------------')
+    print(f' {lis[15]} | {lis[16]} | {lis[17]} | {lis[18]} | {lis[19]}')
+    print(f'-------------------')
+    print(f' {lis[20]} | {lis[21]} | {lis[22]} | {lis[23]} | {lis[24]}')
+
+
 # return 4 numbers that starts from the "number" and has "difference" difference
 def diff(number, difference, range_):
     lis = []
@@ -27,7 +43,7 @@ def diff(number, difference, range_):
         num += difference
     return lis
 
-
+# returns the possible moves according to the danger level
 def possible_wins(danger_level):
     possible_moves = wins
     range_ = 4
@@ -39,22 +55,8 @@ def possible_wins(danger_level):
             # print(diff(num, diff_num,range_))
             yield diff(num, diff_num, range_)
 
-# empty_board = [str(i+1) for i in range(25)]
-empty_board = [" " for i in range(25)]
-
 # better_ones = [12, 7, 11, 13, 17, 6, 8, 16, 18]
 best_places_ordered = [12, 7, 11, 13, 17, 6, 8, 16, 18, 0, 4, 24, 20, 2, 10, 14, 22, 1, 3, 5, 9, 15, 19]
-
-def print_board(lis):
-    print(f' {lis[0]} | {lis[1]} | {lis[2]} | {lis[3]} | {lis[4]}')
-    print(f'-------------------')
-    print(f' {lis[5]} | {lis[6]} | {lis[7]} | {lis[8]} | {lis[9]}')
-    print(f'-------------------')
-    print(f' {lis[10]} | {lis[11]} | {lis[12]} | {lis[13]} | {lis[14]}')
-    print(f'-------------------')
-    print(f' {lis[15]} | {lis[16]} | {lis[17]} | {lis[18]} | {lis[19]}')
-    print(f'-------------------')
-    print(f' {lis[20]} | {lis[21]} | {lis[22]} | {lis[23]} | {lis[24]}')
 
 # enter the board you wanna play on, enter the move and whose turn it is
 def select_space(board, move, turn):
@@ -70,7 +72,7 @@ def select_space(board, move, turn):
 
 
 # it checks if anyone won                        working status - yes it is working
-# need to add (check if there a draw)
+# NEED TO ADD(check if there a draw)
 def who_won(board): 
     x_pos = [] # list of moves made by x
     o_pos = [] # list of moves made by o
@@ -97,13 +99,13 @@ def who_won(board):
             if four_to_win == 4:
                 return "O wins!"
 
+# Return the position of the given player on the given board
 def player_moves(board, opponent):
     opponent_moves = []
     opponent = opponent.upper()
     for i in range(len(empty_board)):
         if board[i] == opponent:
             opponent_moves.append(i)
-    # print(opponent_moves)
     return opponent_moves
 
 # def analise_the_board(board, opponent):
@@ -119,8 +121,8 @@ def who_won(board):
             print('O wins the game!')
             return "O"
 
+# this function is kinda fucked up, I was too tried to fix it but still works but there are some better solution
 # trying to find the best move to defend
-
 def defend(board, opponent, danger_level):
     best_moves = []
     best_moves2 = []
@@ -142,32 +144,22 @@ def defend(board, opponent, danger_level):
     print(best_moves2, 'best move?')
     return best_moves2  
 
+# Returns the list of raws at least one space that the opponent has captured.
 def opponent_raw(opponent):
+    list_ = []
     player_moves_ = player_moves(empty_board, opponent)
     for diff_num in five_spaces:
         for num in five_spaces[diff_num]:
-            print(num)
-
             lis = diff(num, diff_num, 5)
-            print(lis)
+            for move in lis:
+                if move in player_moves_:
+                    list_.append(lis)
+    print(list_)
 
-    # lis = []
-    # lis2 = [] # i know this is a dumb thing to do, but I am tired and just gonna do it
-    # win_moves = possible_wins(1)
-    # for diff_num in wins:
-    #     for num in wins[diff_num]:
-    #         moves_list = diff(num, diff_num, 5)
-    #         for move in moves_list:
-    #             if move in players_moves:
-    #                 lis.append(moves_list)
-    #                 break
-    # for i in lis:
-        # print(i)
-    # print(lis)
-
-
+# Trying to make a three move trap
 def three_move_trap(board, opponent):
     best_moves = []
+    opponent_captured_raws = []
     opponent = opponent.upper()
     if opponent == 'X': me = 'O'
     my_moves = player_moves(board, me)
@@ -179,9 +171,10 @@ def three_move_trap(board, opponent):
                     if i not in opponent_moves:
                         best_moves.append(i)
                 break
-    print(best_moves)
+    print(best_moves, 'this is the one')
     return best_moves
 
+# This will return the one best move by calculating all the offences and defences
 def best_move(board, opponent):
     defense = defend(board, opponent, 2)
     defense2 = defend(board, opponent, 1)
@@ -191,9 +184,9 @@ def best_move(board, opponent):
     # print([i+1 for i in defense2])
 
 
-select_space(empty_board, 2, "x")
-# select_space(empty_board, , "o")
-# three_move_trap(empty_board, "X")
+select_space(empty_board, 1, "x")
+select_space(empty_board, 13, "0")
+three_move_trap(empty_board, "X")
 print_board(empty_board)
 
 def play_the_game(board):
