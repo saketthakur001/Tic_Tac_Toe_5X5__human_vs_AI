@@ -12,11 +12,21 @@ three_from_the_five = {1:[2, 7, 12, 17, 22],
                4:[9]
                }
 
+def return_the_threes():
+    for moves in three_from_the_five:
+        for move in three_from_the_five[moves]:
+            yield diff(move, moves, 3)
+
 five_spaces = {1:[1, 6, 11, 16, 21],
                5:[1, 2, 3, 4, 5],
                6:[1],
                4:[5]
               }
+
+def return_five_spaces():
+        for moves in five_spaces:
+            for move in five_spaces[moves]:
+                yield diff(move, moves, 5)
 
 # empty_board = [str(i+1) for i in range(25)]
 empty_board = [" " for i in range(25)]
@@ -157,34 +167,43 @@ def opponent_raw(opponent):
     print(list_)
 
 # Trying to make a three move trap
+
+
 def three_move_trap(board, opponent):
     best_moves = []
-    opponent_captured_raws = []
-    opponent = opponent.upper()
-    if opponent == 'X': me = 'O'
-    my_moves = player_moves(board, me)
+    my_moves = player_moves(board, 'O')
     opponent_moves = player_moves(board, opponent)
-    for moves in possible_wins(2):
-        for move in moves:
-            if move in my_moves:
-                for i in moves:
-                    if i not in opponent_moves:
-                        best_moves.append(i)
-                break
-    print(best_moves, 'this is the one')
-    return best_moves
+    
+
+
+# def three_move_trap(board, opponent):
+#     best_moves = []
+#     opponent_captured_raws = []
+#     opponent = opponent.upper()
+#     if opponent == 'X': me = 'O'
+#     my_moves = player_moves(board, me)
+#     opponent_moves = player_moves(board, opponent)
+#     for moves in possible_wins(2):
+#         for move in moves:
+#             if move in my_moves:
+#                 for i in moves:
+#                     if i not in opponent_moves:
+#                         best_moves.append(i)
+#                 break
+#     print(best_moves, 'this is the one')
+#     return best_moves
 
 # This will return the one best move by calculating all the offences and defences
 def best_move(board, opponent):
     defense = defend(board, opponent, 2)
     defense2 = defend(board, opponent, 1)
     opponenet_moves = player_moves(board, opponent)
-    three_move_trap(board, opponent)
+
+
     # print([i+1 for i in defense])
     # print([i+1 for i in defense2])
-
-
-select_space(empty_board, 1, "x")
+    
+select_space(empty_board, 1, "X")
 select_space(empty_board, 13, "0")
 three_move_trap(empty_board, "X")
 print_board(empty_board)
@@ -207,4 +226,6 @@ def play_the_game(board):
 
 # play_the_game(empty_board)
 
-opponent_raw('X')
+# opponent_raw('X')
+for i in return_the_threes():
+    print(i)
