@@ -155,7 +155,7 @@ def defend(board, opponent, danger_level):
     return best_moves2  
 
 # Returns the list of raws at least one space that the opponent has captured.
-def opponent_raw(opponent):
+def player_row(opponent):
     list_ = []
     player_moves_ = player_moves(empty_board, opponent)
     for diff_num in five_spaces:
@@ -225,7 +225,3 @@ def play_the_game(board):
             return "X"
 
 # play_the_game(empty_board)
-
-# opponent_raw('X')
-for i in return_the_threes():
-    print(i)
